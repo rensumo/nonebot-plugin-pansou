@@ -7,11 +7,6 @@
 <a href="./LICENSE">
     <img src="https://img.shields.io/github/license/fllesser/nonebot-plugin-quark.svg" alt="license">
 </a>
-<a href="https://pypi.python.org/pypi/nonebot-plugin-quark">
-    <img src="https://img.shields.io/pypi/v/nonebot-plugin-quark.svg" alt="pypi">
-</a>
-<img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="python">
-
 </div>
 
 
