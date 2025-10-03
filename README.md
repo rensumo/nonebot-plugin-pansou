@@ -2,14 +2,9 @@
     <a href="https://v2.nonebot.dev/store">
     <img src="https://raw.githubusercontent.com/fllesser/nonebot-plugin-template/refs/heads/resource/.docs/NoneBotPlugin.svg" width="310" alt="logo"></a>
 
-## ✨ nonebot-plugin-quark ✨
+## ✨ nonebot-plugin-pansou ✨
 
-<a href="./LICENSE">
-    <img src="https://img.shields.io/github/license/fllesser/nonebot-plugin-pansou.svg" alt="license">
-</a>
 </div>
-
-
 
 ## 📖 介绍
 
@@ -23,7 +18,7 @@
 API_URL = "http://xxx.xxx.xxx/api/search"  # 搜索接口地址
 HEALTH_API_URL = "http://xxx.xxx.xxx/api/health"  # 健康检查接口地址
 ```
-改为[盘搜](https://github.com/fish2018/pansou)的访问地址
+改为[盘搜](https://github.com/fish2018/pansou)的实际访问地址
 
 ## 🎉 使用
 ### 指令表
