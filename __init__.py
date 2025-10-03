@@ -1,7 +1,7 @@
 from nonebot import on_command
 from nonebot.plugin import PluginMetadata
-from nonebot.adapters import Bot  # 兼容旧版NoneBot2的Bot导入路径
-from nonebot.adapters.onebot.v11 import MessageEvent, Message, MessageSegment
+from nonebot.adapters import Bot
+from nonebot.adapters.onebot.v11 import MessageEvent, Message, MessageSegment, GroupMessageEvent
 from nonebot.params import CommandArg
 import httpx
 import json
@@ -82,7 +82,7 @@ def split_long_message(message: str, max_length: int = MAX_MESSAGE_LENGTH) -> li
     return parts
 
 
-async def send_force_forward_msg(bot: Bot, event: MessageEvent, message: str):
+async def send_force_forward_msg(bot: Bot, event: GroupMessageEvent, message: str):
     """强制合并转发函数（无段数判断，失败才回退）"""
     message_parts = split_long_message(message)
     
@@ -98,7 +98,7 @@ async def send_force_forward_msg(bot: Bot, event: MessageEvent, message: str):
     # 强制执行合并转发
     try:
         await bot.send_forward_msg(
-            user_id=event.user_id,
+            group_id=event.group_id,  # 关键修改：发送到群聊
             messages=forward_nodes
         )
     except Exception as e:
@@ -110,8 +110,7 @@ async def send_force_forward_msg(bot: Bot, event: MessageEvent, message: str):
 
 # ------------------------------ 搜索命令处理 ------------------------------
 @pansou.handle()
-# 关键：通过依赖注入获取Bot，避免从Matcher取bot（兼容旧版）
-async def handle_pansou(bot: Bot, event: MessageEvent, args: Message = CommandArg()):
+async def handle_pansou(bot: Bot, event: GroupMessageEvent, args: Message = CommandArg()):
     raw_text = args.extract_plain_text().strip()
     
     # 无参数时直接终止流程（不依赖FinishedException，让NoneBot自动处理）
@@ -212,7 +211,7 @@ async def handle_pansou(bot: Bot, event: MessageEvent, args: Message = CommandAr
                     
                     result_text.append(f"{idx}. {note}\n   {link_part}\n")
         
-        # 强制发送合并转发
+        # 强制发送合并转发（关键修改：传入 event.group_id）
         full_text = "\n".join(result_text).strip()
         await send_force_forward_msg(bot, event, full_text)
     
@@ -227,8 +226,7 @@ async def handle_pansou(bot: Bot, event: MessageEvent, args: Message = CommandAr
 
 # ------------------------------ 状态查询处理 ------------------------------
 @pansou_status.handle()
-# 关键：同样注入Bot实例，避免依赖Matcher的bot属性
-async def handle_pansou_status(bot: Bot, event: MessageEvent):
+async def handle_pansou_status(bot: Bot, event: GroupMessageEvent):
     try:
         # 调用健康检查接口
         async with httpx.AsyncClient() as client:
@@ -258,7 +256,7 @@ async def handle_pansou_status(bot: Bot, event: MessageEvent):
             f"接口地址：{HEALTH_API_URL}"
         ]
         
-        # 状态查询也强制合并转发
+        # 状态查询也强制合并转发（关键修改：传入 event.group_id）
         await send_force_forward_msg(bot, event, "\n".join(status_text))
     
     # 仅捕获业务异常
