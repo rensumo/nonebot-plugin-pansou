@@ -5,7 +5,7 @@
 ## ✨ nonebot-plugin-quark ✨
 
 <a href="./LICENSE">
-    <img src="https://img.shields.io/github/license/fllesser/nonebot-plugin-quark.svg" alt="license">
+    <img src="https://img.shields.io/github/license/fllesser/nonebot-plugin-pansou.svg" alt="license">
 </a>
 </div>
 
