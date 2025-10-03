@@ -20,7 +20,9 @@
 
 夸克云盘搜索插件
 
+## 💿 安装
 
+将nonebot-plugin-pansou文件夹下载后修改env的plugin_dirs为"nonebot-plugin-pansou"
 
 ## 🎉 使用
 ### 指令表
