@@ -12,7 +12,7 @@
 
 ## 💿 安装
 
-将nonebot-plugin-pansou文件夹下载后修改env的plugin_dirs为"nonebot-plugin-pansou"
+将__init__.py文件夹置于根目录下nonebot-plugin-pansou文件夹中，然后修改env的plugin_dirs为"nonebot-plugin-pansou"
 然后将__init__.py中的
 ```python
 API_URL = "http://xxx.xxx.xxx/api/search"  # 搜索接口地址
